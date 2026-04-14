@@ -10,4 +10,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobNexus.Core\JobNexus.Core.csproj" />
+    <ProjectReference Include="..\JobNexus.Storage\JobNexus.Storage.csproj" />
+  </ItemGroup>
 </Project>

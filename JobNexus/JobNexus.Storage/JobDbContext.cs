@@ -10,7 +10,6 @@ namespace JobNexus.Storage
     {
         public JobDbContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<BackgroundJob> Jobs { get; set; }
