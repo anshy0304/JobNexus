@@ -4,7 +4,11 @@ using System.Text;
 
 namespace JobNexus.Core.Enums
 {
-    internal class JobStatus
+    public enum JobStatus
     {
+        Pending = 0,    
+        Processing = 1, 
+        Completed = 2,  
+        Failed = 3      
     }
 }

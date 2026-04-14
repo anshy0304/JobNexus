@@ -1,10 +1,16 @@
-﻿using System;
+﻿using JobNexus.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace JobNexus.Core.Interfaces
 {
-    internal class IJobRepository
+    public interface IJobRepository
     {
+        
+        Task<BackgroundJob?> GetNextPendingJobAsync();
+
+        
+        Task UpdateJobAsync(BackgroundJob job);
     }
 }
