@@ -1,1 +1,7 @@
-<Solution />
+<Solution>
+  <Project Path="JobNexus.Api/JobNexus.Api.csproj" />
+  <Project Path="JobNexus.Core/JobNexus.Core.csproj" />
+  <Project Path="JobNexus.Demo/JobNexus.Demo.csproj" />
+  <Project Path="JobNexus.Storage/JobNexus.Storage.csproj" />
+  <Project Path="JobNexus.Worker/JobNexus.Worker.csproj" />
+</Solution>
