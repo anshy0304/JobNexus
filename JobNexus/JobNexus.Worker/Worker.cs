@@ -1,3 +1,4 @@
+using JobNexus.Core.Entities;
 using JobNexus.Core.Enums;
 using JobNexus.Core.Interfaces;
 using JobNexus.Storage;
@@ -20,28 +21,36 @@ namespace JobNexus.Worker
             _logger.LogInformation("JobNexus Worker is starting up.. ");
             while (!stoppingToken.IsCancellationRequested)
             {
-                using(var scope = _scopeFactory.CreateScope())
+                BackgroundJob? currentJob = null;
+
+                using var scope = _scopeFactory.CreateScope();
+                var repository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
+
+                try
                 {
-                    var jobRepository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
+                    currentJob = await repository.GetNextPendingJobAsync();
 
-                    var currentJob = await jobRepository.GetNextPendingJobAsync();
-
-                    if(currentJob == null)
+                    if (currentJob != null)
                     {
-                        _logger.LogInformation("No jobs found.Going back to sleep....at{time}", DateTimeOffset.Now);
-                    }else
-                    {
-                        _logger.LogInformation("Found job with ID:{jobId}! Processing...", currentJob.Id);
+                        
+                        currentJob.Status = JobStatus.Processing;
+                        await repository.UpdateJobAsync(currentJob);
 
                         await Task.Delay(2000, stoppingToken);
 
                         currentJob.Status = JobStatus.Completed;
-
-                        await jobRepository.UpdateJobAsync(currentJob);
-
-                        _logger.LogInformation("Job {JobId} successfully completed and saved!", currentJob.Id);
+                        await repository.UpdateJobAsync(currentJob);
                     }
                 }
+                catch (Exception)
+                {
+                    if (currentJob != null)
+                    {
+                        currentJob.Status = JobStatus.Failed;
+                        await repository.UpdateJobAsync(currentJob);
+                    }
+                }
+
                 await Task.Delay(5000, stoppingToken);
             }
         }
