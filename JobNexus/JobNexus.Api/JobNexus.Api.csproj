@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.13.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JobNexus.Core\JobNexus.Core.csproj" />
+    <ProjectReference Include="..\JobNexus.Storage\JobNexus.Storage.csproj" />
   </ItemGroup>
 
 </Project>

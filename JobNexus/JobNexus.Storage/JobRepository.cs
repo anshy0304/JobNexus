@@ -25,5 +25,11 @@ namespace JobNexus.Storage
             _context.Jobs.Update(job);
             await _context.SaveChangesAsync();
         }
+        public async Task AddAsync(BackgroundJob job)
+        {
+            await _context.Jobs.AddAsync(job);
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

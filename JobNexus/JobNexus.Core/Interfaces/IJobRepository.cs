@@ -12,5 +12,7 @@ namespace JobNexus.Core.Interfaces
 
         
         Task UpdateJobAsync(BackgroundJob job);
+
+        Task AddAsync(BackgroundJob job);
     }
 }
